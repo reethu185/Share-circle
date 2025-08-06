@@ -1,0 +1,136 @@
+import React, { useState } from 'react';
+
+const Donate = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    item: '',
+    condition: '',
+    address: '',
+    image: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === 'image') {
+      setFormData({ ...formData, image: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!formData.image) {
+      alert('Please upload an image.');
+      return;
+    }
+
+    console.log('Submitted:', formData);
+    alert('Donation submitted!');
+
+    setFormData({
+      name: '',
+      item: '',
+      condition: '',
+      address: '',
+      image: null,
+    });
+
+    document.getElementById('imageInput').value = '';
+  };
+
+  return (
+    <div className="min-h-screen bg-[#1F1F1F] text-white flex items-center justify-center px-4 py-10">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-2xl bg-[#2A2A2A] p-10 rounded-2xl shadow-lg"
+      >
+        <h2 className="text-2xl font-bold mb-8 text-center text-white">Donate Unused Items</h2>
+
+        {/* Form Fields */}
+        <div className="space-y-5">
+          {/* Full Name */}
+          <div className="flex items-center gap-4">
+            <label className="w-32 text-sm text-gray-300">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+              className="flex-1 bg-[#3A3A3A] placeholder:text-sm placeholder:text-gray-400 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-green-400"
+              required
+            />
+          </div>
+
+          {/* Item Name */}
+          <div className="flex items-center gap-4">
+            <label className="w-32 text-sm text-gray-300">Item Name</label>
+            <input
+              type="text"
+              name="item"
+              value={formData.item}
+              onChange={handleChange}
+              placeholder="What are you donating?"
+              className="flex-1 bg-[#3A3A3A] placeholder:text-sm placeholder:text-gray-400 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-green-400"
+              required
+            />
+          </div>
+
+          {/* Condition */}
+          <div className="flex items-center gap-4">
+            <label className="w-32 text-sm text-gray-300">Condition</label>
+            <input
+              type="text"
+              name="condition"
+              value={formData.condition}
+              onChange={handleChange}
+              placeholder="e.g., Like New, Good"
+              className="flex-1 bg-[#3A3A3A] placeholder:text-sm placeholder:text-gray-400 text-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-green-400"
+              required
+            />
+          </div>
+
+          {/* Address */}
+          <div className="flex items-start gap-4">
+            <label className="w-32 pt-3 text-sm text-gray-300">Pickup Address</label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Enter pickup address"
+              rows="3"
+              className="flex-1 bg-[#3A3A3A] placeholder:text-sm placeholder:text-gray-400 text-white p-3 rounded-lg outline-none resize-none focus:ring-2 focus:ring-green-400"
+              required
+            ></textarea>
+          </div>
+
+          {/* Image Upload */}
+          <div className="flex items-center gap-4">
+            <label className="w-32 text-sm text-gray-300">Upload Image</label>
+            <input
+              type="file"
+              name="image"
+              id="imageInput"
+              accept="image/*"
+              onChange={handleChange}
+              className="flex-1 text-sm text-gray-200 bg-[#3A3A3A] rounded-lg px-3 py-2 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-green-600 file:text-white hover:file:bg-green-700"
+              required
+            />
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full mt-8 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition duration-300"
+        >
+          Submit Donation
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default Donate;
